@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curated Growth Advisors — KW Legacy Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --white:#FFFFFF;
+  --offwhite:#F8F7F5;
+  --cream:#F2EDE8;
+  --light:#E8E2DB;
+  --border:#E0D8D0;
+  --border2:#C8BFB5;
+  --red:#CC2027;
+  --red2:#A81A20;
+  --red-light:#FAF0F0;
+  --black:#1A1A1A;
+  --dark:#2D2D2D;
+  --gray:#6B6B6B;
+  --gray2:#9A9A9A;
+  --green:#1A7A4A;
+  --green-light:#F0FAF4;
+  --amber:#C47A1A;
+  --amber-light:#FDF5E8;
+  --blue:#1A4A8A;
+  --blue-light:#EEF3FA;
+  --gold:#B8942A;
+  --sans:'DM Sans',sans-serif;
+  --serif:'Playfair Display',serif;
+  --mono:'DM Mono',monospace;
+}
+
+body{font-family:var(--sans);background:var(--offwhite);color:var(--black);min-height:100vh;}
+
+/* HEADER */
+header{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 32px;height:68px;display:flex;align-items:center;
+  justify-content:space-between;position:sticky;top:0;z-index:100;
+  box-shadow:0 1px 12px rgba(0,0,0,0.06);
+}
+.header-left{display:flex;align-items:center;gap:20px;}
+.curated-logo img{height:32px;object-fit:contain;}
+.divider{width:1px;height:28px;background:var(--border);}
+.kw-logo img{height:28px;object-fit:contain;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.team-pill{
+  display:flex;align-items:center;gap:-4px;
+}
+.avatar{
+  width:32px;height:32px;border-radius:50%;border:2px solid var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;margin-left:-6px;
+}
+.avatar:first-child{margin-left:0;}
+.status-tag{
+  display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;
+  color:var(--green);background:var(--green-light);
+  border:1px solid rgba(26,122,74,0.2);padding:5px 12px;border-radius:20px;
+}
+.status-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* NAV TABS */
+.nav-tabs{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 32px;display:flex;gap:0;
+}
+.nav-tab{
+  padding:14px 20px;font-size:13px;font-weight:600;cursor:pointer;
+  border-bottom:2px solid transparent;color:var(--gray);transition:all 0.2s;
+  white-space:nowrap;
+}
+.nav-tab:hover{color:var(--black);}
+.nav-tab.active{color:var(--red);border-bottom-color:var(--red);}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:calc(100vh - 113px);}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--white);border-right:1px solid var(--border);
+  padding:24px 0;
+}
+.sb-section{margin-bottom:24px;}
+.sb-label{
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--gray2);padding:0 20px;margin-bottom:8px;font-family:var(--mono);
+}
+.sb-item{
+  display:flex;align-items:center;gap:10px;padding:9px 20px;
+  cursor:pointer;transition:all 0.15s;font-size:13px;font-weight:500;
+  color:var(--gray);border-left:2px solid transparent;text-decoration:none;
+}
+.sb-item:hover{background:var(--offwhite);color:var(--black);}
+.sb-item.active{background:var(--red-light);border-left-color:var(--red);color:var(--red);}
+.sb-icon{font-size:15px;width:20px;text-align:center;}
+
+/* CONTENT */
+.content{padding:28px;overflow-y:auto;}
+.page{display:none;}
+.page.active{display:block;}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:28px;}
+.page-title{font-family:var(--serif);font-size:26px;font-weight:700;margin-bottom:4px;}
+.page-sub{font-size:13px;color:var(--gray);}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+.stat{
+  background:var(--white);border:1px solid var(--border);border-radius:12px;
+  padding:18px;position:relative;overflow:hidden;
+}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent,var(--red));}
+.stat.r{--accent:var(--red);}
+.stat.g{--accent:var(--green);}
+.stat.b{--accent:var(--blue);}
+.stat.a{--accent:var(--gold);}
+.stat-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray2);font-family:var(--mono);margin-bottom:8px;}
+.stat-val{font-size:28px;font-weight:800;font-family:var(--serif);}
+.stat-val.r{color:var(--red);}
+.stat-val.g{color:var(--green);}
+.stat-val.b{color:var(--blue);}
+.stat-val.a{color:var(--gold);}
+.stat-sub{font-size:11px;color:var(--gray2);margin-top:4px;}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.card-title span{font-size:13px;font-weight:400;color:var(--gray);}
+
+/* ROADMAP */
+.roadmap-steps{display:flex;gap:0;position:relative;margin:8px 0;}
+.roadmap-steps::before{
+  content:'';position:absolute;top:18px;left:18px;right:18px;height:2px;
+  background:var(--border);z-index:0;
+}
+.rm-step{flex:1;text-align:center;position:relative;z-index:1;}
+.rm-node{
+  width:36px;height:36px;border-radius:50%;margin:0 auto 8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;border:2px solid var(--border);
+  background:var(--white);transition:all 0.3s;
+}
+.rm-step.done .rm-node{background:var(--green);border-color:var(--green);color:white;}
+.rm-step.active .rm-node{background:var(--red);border-color:var(--red);color:white;box-shadow:0 0 0 4px rgba(204,32,39,0.15);}
+.rm-step.todo .rm-node{background:var(--offwhite);color:var(--gray2);}
+.rm-name{font-size:11px;font-weight:700;margin-bottom:2px;}
+.rm-sub{font-size:10px;color:var(--gray2);}
+
+/* KANBAN */
+.kanban-board{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.kanban-col{background:var(--offwhite);border:1px solid var(--border);border-radius:12px;padding:14px;min-height:300px;}
+.kanban-col.drag-over{background:var(--red-light);border-color:rgba(204,32,39,0.3);}
+.kc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.kc-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-family:var(--mono);}
+.kc-count{font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:10px;background:var(--border);}
+.task-card{
+  background:var(--white);border:1px solid var(--border);border-radius:8px;
+  padding:12px;margin-bottom:8px;cursor:grab;transition:all 0.15s;
+}
+.task-card:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+.task-card.dragging{opacity:0.4;}
+.tc-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;font-family:var(--mono);margin-bottom:5px;}
+.tc-task{font-size:12px;font-weight:600;margin-bottom:8px;line-height:1.4;color:var(--dark);}
+.tc-footer{display:flex;align-items:center;justify-content:space-between;}
+.tc-assignee{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;border:1px solid var(--border);}
+.tc-priority{font-size:9px;font-weight:600;padding:2px 6px;border-radius:4px;font-family:var(--mono);}
+.p-high{background:#FEE2E2;color:#B91C1C;}
+.p-med{background:#FEF3C7;color:#92400E;}
+.p-low{background:#D1FAE5;color:#065F46;}
+.add-card-btn{width:100%;padding:8px;border:1px dashed var(--border2);border-radius:8px;background:transparent;color:var(--gray2);font-size:11px;cursor:pointer;font-family:var(--sans);transition:all 0.15s;margin-top:4px;}
+.add-card-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* MILESTONES */
+.milestone-list{display:flex;flex-direction:column;gap:10px;}
+.milestone{
+  display:flex;align-items:flex-start;gap:14px;padding:14px;
+  background:var(--offwhite);border:1px solid var(--border);border-radius:10px;
+  transition:all 0.15s;
+}
+.milestone:hover{background:var(--white);border-color:var(--border2);}
+.milestone-check{
+  width:22px;height:22px;border-radius:6px;border:2px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  cursor:pointer;transition:all 0.2s;margin-top:1px;
+}
+.milestone-check.done{background:var(--green);border-color:var(--green);color:white;font-size:11px;}
+.milestone-check.active{background:var(--red);border-color:var(--red);color:white;font-size:11px;}
+.milestone-info{flex:1;}
+.milestone-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.milestone-desc{font-size:11px;color:var(--gray);}
+.milestone-owner{font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:4px;}
+
+/* NOTES */
+.note-area{
+  width:100%;min-height:120px;padding:14px;
+  background:var(--offwhite);border:1px solid var(--border);border-radius:10px;
+  font-family:var(--sans);font-size:13px;color:var(--dark);resize:vertical;
+  outline:none;transition:border 0.2s;
+}
+.note-area:focus{border-color:var(--red);}
+.save-btn{
+  padding:9px 20px;background:var(--red);border:none;border-radius:8px;
+  color:white;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans);
+  transition:all 0.2s;margin-top:10px;
+}
+.save-btn:hover{background:var(--red2);}
+
+/* WEBSITE TRACKER */
+.site-page-list{display:flex;flex-direction:column;gap:8px;}
+.site-page{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  background:var(--white);border:1px solid var(--border);border-radius:10px;
+}
+.site-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;font-family:var(--mono);white-space:nowrap;}
+.s-live{background:var(--green-light);color:var(--green);}
+.s-progress{background:var(--amber-light);color:var(--amber);}
+.s-todo{background:var(--offwhite);color:var(--gray2);border:1px solid var(--border);}
+.s-needs{background:#FEE2E2;color:#B91C1C;}
+.site-page-name{font-size:13px;font-weight:600;flex:1;}
+.site-page-note{font-size:11px;color:var(--gray);}
+
+/* MEETING NOTES */
+.meeting-list{display:flex;flex-direction:column;gap:12px;}
+.meeting-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.meeting-date{font-size:10px;font-family:var(--mono);color:var(--gray2);margin-bottom:6px;}
+.meeting-title{font-size:14px;font-weight:700;margin-bottom:8px;}
+.action-items{display:flex;flex-direction:column;gap:5px;}
+.action-item{display:flex;align-items:center;gap:8px;font-size:12px;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .kanban-board{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="curated-logo"><img src="data:image/png;base64,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" alt="Curated Growth Advisors"></div>
+    <div class="divider"></div>
+    <div class="kw-logo"><img src="https://assets.cdn.filesafe.space/haYBppQ7i0NmK3BQNKyG/media/68c82e9a703deaddd2d56d35.png" alt="KW Legacy" onerror="this.style.display='none'"></div>
+  </div>
+  <div class="header-right">
+    <div class="team-pill">
+      <div class="avatar" style="background:#CC2027;color:white;" title="Tony Edwards">TE</div>
+      <div class="avatar" style="background:#1A4A8A;color:white;" title="Bryant Spencer">BS</div>
+      <div class="avatar" style="background:#1A7A4A;color:white;" title="John Totin">JT</div>
+      <div class="avatar" style="background:#8A5A1A;color:white;" title="Marcus Romero">MR</div>
+    </div>
+    <div class="status-tag"><div class="status-dot"></div>Project Active</div>
+  </div>
+</header>
+
+<div class="nav-tabs">
+  <div class="nav-tab active" onclick="switchTab('dashboard',this)">Dashboard</div>
+  <div class="nav-tab" onclick="switchTab('roadmap',this)">Roadmap</div>
+  <div class="nav-tab" onclick="switchTab('tasks',this)">Task Board</div>
+  <div class="nav-tab" onclick="switchTab('website',this)">Website Tracker</div>
+  <div class="nav-tab" onclick="switchTab('milestones',this)">Goals & Milestones</div>
+  <div class="nav-tab" onclick="switchTab('meetings',this)">Meeting Notes</div>
+  <div class="nav-tab" onclick="switchTab('notes',this)">Notes & Files</div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sb-section">
+      <div class="sb-label">Project</div>
+      <div class="sb-item active" onclick="switchTab('dashboard',null)"><span class="sb-icon">📊</span>Dashboard</div>
+      <div class="sb-item" onclick="switchTab('roadmap',null)"><span class="sb-icon">🗺</span>Roadmap</div>
+      <div class="sb-item" onclick="switchTab('tasks',null)"><span class="sb-icon">📋</span>Task Board</div>
+      <div class="sb-item" onclick="switchTab('website',null)"><span class="sb-icon">🌐</span>Website Tracker</div>
+      <div class="sb-item" onclick="switchTab('milestones',null)"><span class="sb-icon">🎯</span>Goals & Milestones</div>
+      <div class="sb-item" onclick="switchTab('meetings',null)"><span class="sb-icon">📅</span>Meeting Notes</div>
+      <div class="sb-item" onclick="switchTab('notes',null)"><span class="sb-icon">📝</span>Notes & Files</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Team</div>
+      <div class="sb-item" style="cursor:default;">
+        <div class="avatar" style="background:#CC2027;color:white;width:26px;height:26px;font-size:10px;border:none;">TE</div>
+        <div><div style="font-size:12px;font-weight:600;">Tony Edwards</div><div style="font-size:10px;color:var(--gray2);">SDG · Tech Lead</div></div>
+      </div>
+      <div class="sb-item" style="cursor:default;">
+        <div class="avatar" style="background:#1A4A8A;color:white;width:26px;height:26px;font-size:10px;border:none;">BS</div>
+        <div><div style="font-size:12px;font-weight:600;">Bryant Spencer</div><div style="font-size:10px;color:var(--gray2);">SDG · Business Dev</div></div>
+      </div>
+      <div class="sb-item" style="cursor:default;">
+        <div class="avatar" style="background:#1A7A4A;color:white;width:26px;height:26px;font-size:10px;border:none;">JT</div>
+        <div><div style="font-size:12px;font-weight:600;">John Totin</div><div style="font-size:10px;color:var(--gray2);">KW Legacy · Owner</div></div>
+      </div>
+      <div class="sb-item" style="cursor:default;">
+        <div class="avatar" style="background:#8A5A1A;color:white;width:26px;height:26px;font-size:10px;border:none;">MR</div>
+        <div><div style="font-size:12px;font-weight:600;">Marcus Romero</div><div style="font-size:10px;color:var(--gray2);">Web Design Input</div></div>
+      </div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Quick Links</div>
+      <a class="sb-item" href="https://legacy.hypergrowthhub.io" target="_blank"><span class="sb-icon">🌐</span>KW Legacy Site</a>
+      <a class="sb-item" href="https://geekthugga.github.io/mayo-infrastructure" target="_blank"><span class="sb-icon">🖥</span>MAYO App</a>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div class="page-title">KW Legacy — Project Dashboard</div>
+        <div class="page-sub">Curated Partners · Powered by SDG + HGH + MAYO Infrastructure</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat r"><div class="stat-label">Website Status</div><div class="stat-val r">Live</div><div class="stat-sub">legacy.hypergrowthhub.io</div></div>
+        <div class="stat a"><div class="stat-label">Open Tasks</div><div class="stat-val a" id="openTaskCount">0</div><div class="stat-sub">Across all categories</div></div>
+        <div class="stat g"><div class="stat-label">Completed</div><div class="stat-val g" id="doneTaskCount">0</div><div class="stat-sub">Tasks finished</div></div>
+        <div class="stat b"><div class="stat-label">Project Phase</div><div class="stat-val b">2</div><div class="stat-sub">Website Enhancement</div></div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="card">
+        <div class="card-title">⚡ Recent Activity</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--green-light);border-radius:8px;">
+            <span>🌐</span><span style="font-size:12px;flex:1;">Website launched at legacy.hypergrowthhub.io — all core pages live</span><span style="font-size:10px;color:var(--gray2);font-family:var(--mono);">This week</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--amber-light);border-radius:8px;">
+            <span>🎨</span><span style="font-size:12px;flex:1;">Website enhancement phase started — razzle dazzle improvements identified</span><span style="font-size:10px;color:var(--gray2);font-family:var(--mono);">Active</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--blue-light);border-radius:8px;">
+            <span>🤖</span><span style="font-size:12px;flex:1;">HGH CRM + MAYO Infrastructure connected — AI automation ready</span><span style="font-size:10px;color:var(--gray2);font-family:var(--mono);">Live</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--offwhite);border-radius:8px;">
+            <span>📧</span><span style="font-size:12px;flex:1;">Email automation setup — next phase</span><span style="font-size:10px;color:var(--gray2);font-family:var(--mono);">Upcoming</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick website snapshot -->
+      <div class="card">
+        <div class="card-title">🌐 Website Quick View <span>— legacy.hypergrowthhub.io</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">✅</div>
+            <div style="font-size:12px;font-weight:700;">Home Page</div>
+            <div style="font-size:10px;color:var(--green);font-family:var(--mono);">LIVE</div>
+          </div>
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">✅</div>
+            <div style="font-size:12px;font-weight:700;">About Page</div>
+            <div style="font-size:10px;color:var(--green);font-family:var(--mono);">LIVE</div>
+          </div>
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">⚠️</div>
+            <div style="font-size:12px;font-weight:700;">Stats Animation</div>
+            <div style="font-size:10px;color:var(--amber);font-family:var(--mono);">NEEDS WORK</div>
+          </div>
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">⚠️</div>
+            <div style="font-size:12px;font-weight:700;">CTA Buttons</div>
+            <div style="font-size:10px;color:var(--amber);font-family:var(--mono);">INCONSISTENT</div>
+          </div>
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">⚠️</div>
+            <div style="font-size:12px;font-weight:700;">Team Photos</div>
+            <div style="font-size:10px;color:var(--amber);font-family:var(--mono);">STOCK PHOTOS</div>
+          </div>
+          <div style="padding:12px;background:var(--offwhite);border-radius:8px;text-align:center;">
+            <div style="font-size:20px;margin-bottom:4px;">🔜</div>
+            <div style="font-size:12px;font-weight:700;">Email Automation</div>
+            <div style="font-size:10px;color:var(--gray2);font-family:var(--mono);">UPCOMING</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div class="page" id="page-roadmap">
+      <div class="page-header">
+        <div class="page-title">Project Roadmap</div>
+        <div class="page-sub">KW Legacy × Curated Partners — Phase by phase delivery</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🗺 Master Roadmap</div>
+        <div class="roadmap-steps">
+          <div class="rm-step done">
+            <div class="rm-node">✓</div>
+            <div class="rm-name">Phase 1</div>
+            <div class="rm-sub">Website Build</div>
+          </div>
+          <div class="rm-step active">
+            <div class="rm-node">▶</div>
+            <div class="rm-name">Phase 2</div>
+            <div class="rm-sub">Enhancement</div>
+          </div>
+          <div class="rm-step todo">
+            <div class="rm-node">3</div>
+            <div class="rm-name">Phase 3</div>
+            <div class="rm-sub">Email Automation</div>
+          </div>
+          <div class="rm-step todo">
+            <div class="rm-node">4</div>
+            <div class="rm-name">Phase 4</div>
+            <div class="rm-sub">Social Media</div>
+          </div>
+          <div class="rm-step todo">
+            <div class="rm-node">5</div>
+            <div class="rm-name">Phase 5</div>
+            <div class="rm-sub">Lead Gen + Ads</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase details -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="card" style="border-top:3px solid var(--green);">
+          <div class="card-title" style="color:var(--green);">✓ Phase 1 — Website Build <span style="color:var(--green);">COMPLETE</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>Home page designed and launched</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>About / Why Legacy page</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>For Agents section</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>Buy with Legacy page</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>Sell with Legacy page</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>Contact Us page</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>HGH CRM + AI chatbot connected</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--green);">✓</span><span>Deployed at legacy.hypergrowthhub.io</span></div>
+          </div>
+        </div>
+        <div class="card" style="border-top:3px solid var(--red);">
+          <div class="card-title" style="color:var(--red);">▶ Phase 2 — Enhancement <span style="color:var(--red);">IN PROGRESS</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
+            <div style="display:flex;gap:8px;"><span style="color:var(--red);">▶</span><span>Animate stats counter (35+, 100+, 90%)</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--red);">▶</span><span>Unify CTA button styles site-wide</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--gray2);">◯</span><span>Add section scroll animations</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--gray2);">◯</span><span>Replace stock photos with real team photos</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--gray2);">◯</span><span>Strengthen hero image (real office/SA skyline)</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--gray2);">◯</span><span>Polish About page hero</span></div>
+            <div style="display:flex;gap:8px;"><span style="color:var(--gray2);">◯</span><span>Finalize all page copy scripts</span></div>
+          </div>
+        </div>
+        <div class="card" style="opacity:0.7;">
+          <div class="card-title">◯ Phase 3 — Email Automation</div>
+          <div style="font-size:12px;color:var(--gray);">HGH email campaigns, lead nurture sequences, agent recruitment drip campaigns via MAYO Infrastructure.</div>
+        </div>
+        <div class="card" style="opacity:0.7;">
+          <div class="card-title">◯ Phase 4 — Social Media</div>
+          <div style="font-size:12px;color:var(--gray);">IG/FB/LinkedIn pages, MAYO automated posting, content calendar, community management.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TASK BOARD -->
+    <div class="page" id="page-tasks">
+      <div class="page-header">
+        <div class="page-title">Task Board</div>
+        <div class="page-sub">Drag tasks between columns · Assign to team members</div>
+      </div>
+      <div class="kanban-board" id="kwKanban"></div>
+    </div>
+
+    <!-- WEBSITE TRACKER -->
+    <div class="page" id="page-website">
+      <div class="page-header">
+        <div class="page-title">Website Tracker</div>
+        <div class="page-sub"><a href="https://legacy.hypergrowthhub.io" target="_blank" style="color:var(--red);">legacy.hypergrowthhub.io</a> — Page by page status</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📄 Page Status</div>
+        <div class="site-page-list">
+          <div class="site-page">
+            <span class="site-status s-live">LIVE ✓</span>
+            <span class="site-page-name">Home Page</span>
+            <span class="site-page-note">Strong foundation — needs stat animations + unified CTAs</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-live">LIVE ✓</span>
+            <span class="site-page-name">About / Why Legacy</span>
+            <span class="site-page-note">Good copy — needs real team photos replacing stock</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-progress">IN PROGRESS</span>
+            <span class="site-page-name">For Agents</span>
+            <span class="site-page-note">Scripts ready — need final polish and razzle dazzle</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-progress">IN PROGRESS</span>
+            <span class="site-page-name">Buy with Legacy</span>
+            <span class="site-page-note">Scripts ready — matching home page energy needed</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-progress">IN PROGRESS</span>
+            <span class="site-page-name">Sell with Legacy</span>
+            <span class="site-page-note">Scripts ready — section animations to add</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-live">LIVE ✓</span>
+            <span class="site-page-name">Contact Us</span>
+            <span class="site-page-note">Form working — Request a Meeting section looks good</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-needs">NEEDS WORK</span>
+            <span class="site-page-name">Stats Section (Home)</span>
+            <span class="site-page-note">Numbers should animate/count up on scroll — currently static</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-needs">NEEDS WORK</span>
+            <span class="site-page-name">CTA Buttons (All Pages)</span>
+            <span class="site-page-note">Inconsistent — red, muted pink, and gold/tan. Need unified style</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-todo">UPCOMING</span>
+            <span class="site-page-name">Team Photos</span>
+            <span class="site-page-note">Replace all AI stock photos with real team + office photos</span>
+          </div>
+          <div class="site-page">
+            <span class="site-status s-todo">UPCOMING</span>
+            <span class="site-page-name">Hero Image</span>
+            <span class="site-page-note">Generic lobby photo — SA skyline or real KW Legacy office preferred</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MILESTONES -->
+    <div class="page" id="page-milestones">
+      <div class="page-header">
+        <div class="page-title">Goals & Milestones</div>
+        <div class="page-sub">KW Legacy × Curated Partners — Key deliverables and targets</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🎯 Project Milestones</div>
+        <div class="milestone-list" id="milestoneList"></div>
+      </div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div class="page" id="page-meetings">
+      <div class="page-header">
+        <div class="page-title">Meeting Notes & Action Items</div>
+        <div class="page-sub">Curated Partners team — shared meeting records</div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button onclick="addMeeting()" class="save-btn">+ Add Meeting Notes</button>
+      </div>
+      <div class="meeting-list" id="meetingList"></div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="page" id="page-notes">
+      <div class="page-header">
+        <div class="page-title">Notes & Files</div>
+        <div class="page-sub">Shared notes, links, and references for the KW Legacy project</div>
+      </div>
+      <div class="card">
+        <div class="card-title">📝 Project Notes</div>
+        <textarea class="note-area" id="projectNotes" placeholder="Add notes, links, passwords, references... anything the team needs to know about this project.">Website: legacy.hypergrowthhub.io
+HGH Location: KW Legacy
+AI Chatbot: Active on site (bottom right)
+Address: 1102 E. Sonterra Blvd, Suite 106, San Antonio, TX 78258
+
+Phase 2 Focus: Razzle dazzle improvements
+- Animate stats counters on scroll
+- Unify all CTA button styles to red
+- Add section reveal animations
+- Replace stock photos with real team photos
+- Stronger hero image</textarea>
+        <button class="save-btn" onclick="saveNotes()">Save Notes</button>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 Important Links</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="https://legacy.hypergrowthhub.io" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--offwhite);border-radius:8px;text-decoration:none;color:var(--dark);font-size:13px;border:1px solid var(--border);">
+            <span>🌐</span><span>KW Legacy Website (Live)</span><span style="margin-left:auto;font-size:10px;color:var(--gray2);">legacy.hypergrowthhub.io</span>
+          </a>
+          <a href="https://geekthugga.github.io/mayo-infrastructure" target="_blank" style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--offwhite);border-radius:8px;text-decoration:none;color:var(--dark);font-size:13px;border:1px solid var(--border);">
+            <span>🖥</span><span>MAYO Infrastructure App</span><span style="margin-left:auto;font-size:10px;color:var(--gray2);">SDG Powered</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// TASK DATA
+const KW_COLS=[
+  {id:'backlog',label:'Backlog',color:'var(--gray2)'},
+  {id:'progress',label:'In Progress',color:'var(--red)'},
+  {id:'review',label:'Review',color:'var(--amber)'},
+  {id:'done',label:'Done',color:'var(--green)'},
+];
+
+let kwTasks=[
+  {id:'w1',label:'Website',task:'Animate stats counters on scroll (35+, 100+, 90%)',assignee:'MR',priority:'High',col:'progress'},
+  {id:'w2',label:'Website',task:'Unify all CTA button styles site-wide (red)',assignee:'MR',priority:'High',col:'progress'},
+  {id:'w3',label:'Website',task:'Add section scroll reveal animations',assignee:'MR',priority:'Med',col:'backlog'},
+  {id:'w4',label:'Website',task:'Finalize For Agents page copy + polish',assignee:'TE',priority:'High',col:'progress'},
+  {id:'w5',label:'Website',task:'Finalize Buy with Legacy page',assignee:'TE',priority:'Med',col:'backlog'},
+  {id:'w6',label:'Website',task:'Finalize Sell with Legacy page',assignee:'TE',priority:'Med',col:'backlog'},
+  {id:'w7',label:'Website',task:'Replace stock photos with real team photos',assignee:'JT',priority:'Med',col:'backlog'},
+  {id:'w8',label:'Website',task:'Source better hero image (real office or SA skyline)',assignee:'JT',priority:'Low',col:'backlog'},
+  {id:'w9',label:'Email',task:'Setup email automation sequences in HGH',assignee:'TE',priority:'Med',col:'backlog'},
+  {id:'w10',label:'Email',task:'Create agent recruitment drip campaign',assignee:'BS',priority:'Med',col:'backlog'},
+  {id:'w11',label:'Social',task:'Create Instagram page for KW Legacy',assignee:'BS',priority:'Med',col:'backlog'},
+  {id:'w12',label:'Social',task:'Create Facebook Business page',assignee:'BS',priority:'Med',col:'backlog'},
+  {id:'w13',label:'CRM',task:'HGH CRM — confirm all pipelines active',assignee:'TE',priority:'High',col:'progress'},
+  {id:'w14',label:'Website',task:'Home page — deployed and live',assignee:'TE',priority:'High',col:'done'},
+  {id:'w15',label:'Website',task:'About page — deployed and live',assignee:'TE',priority:'High',col:'done'},
+  {id:'w16',label:'CRM',task:'AI chatbot connected to site',assignee:'TE',priority:'High',col:'done'},
+];
+
+const ASSIGNEE_COLORS={
+  TE:{bg:'#CC2027',text:'white'},
+  BS:{bg:'#1A4A8A',text:'white'},
+  JT:{bg:'#1A7A4A',text:'white'},
+  MR:{bg:'#8A5A1A',text:'white'},
+};
+
+let kwDragCard=null;
+
+function renderKwKanban(){
+  const board=document.getElementById('kwKanban');
+  board.innerHTML='';
+  let open=0,done=0;
+
+  KW_COLS.forEach(col=>{
+    const tasks=kwTasks.filter(t=>t.col===col.id);
+    if(col.id!=='done') open+=tasks.length;
+    else done+=tasks.length;
+
+    const colEl=document.createElement('div');
+    colEl.className='kanban-col';
+    colEl.dataset.col=col.id;
+    colEl.addEventListener('dragover',(e)=>{e.preventDefault();colEl.classList.add('drag-over');});
+    colEl.addEventListener('dragleave',()=>colEl.classList.remove('drag-over'));
+    colEl.addEventListener('drop',(e)=>{
+      e.preventDefault();colEl.classList.remove('drag-over');
+      if(kwDragCard){
+        const t=kwTasks.find(t=>t.id===kwDragCard);
+        if(t) t.col=col.id;
+        renderKwKanban();
+      }
+    });
+
+    colEl.innerHTML=`<div class="kc-header"><span class="kc-title" style="color:${col.color};">${col.label}</span><span class="kc-count">${tasks.length}</span></div>`;
+
+    tasks.forEach(task=>{
+      const card=document.createElement('div');
+      card.className='task-card';
+      card.draggable=true;
+      card.addEventListener('dragstart',()=>{kwDragCard=task.id;setTimeout(()=>card.classList.add('dragging'),0);});
+      card.addEventListener('dragend',()=>{kwDragCard=null;card.classList.remove('dragging');});
+      const ac=ASSIGNEE_COLORS[task.assignee]||{bg:'#888',text:'white'};
+      const pc=task.priority==='High'?'p-high':task.priority==='Med'?'p-med':'p-low';
+      card.innerHTML=`
+        <div class="tc-label" style="color:var(--red);">${task.label}</div>
+        <div class="tc-task">${task.task}</div>
+        <div class="tc-footer">
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="tc-assignee" style="background:${ac.bg};color:${ac.text};">${task.assignee}</div>
+            <span class="tc-priority ${pc}">${task.priority}</span>
+          </div>
+          <div>
+            <button onclick="moveKwCard('${task.id}',-1)" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--gray2);">←</button>
+            <button onclick="moveKwCard('${task.id}',1)" style="background:none;border:none;cursor:pointer;font-size:12px;color:var(--gray2);">→</button>
+          </div>
+        </div>
+      `;
+      colEl.appendChild(card);
+    });
+
+    const btn=document.createElement('button');
+    btn.className='add-card-btn';
+    btn.textContent='+ Add Task';
+    btn.onclick=()=>addKwTask(col.id);
+    colEl.appendChild(btn);
+    board.appendChild(colEl);
+  });
+
+  document.getElementById('openTaskCount').textContent=open;
+  document.getElementById('doneTaskCount').textContent=done;
+}
+
+function moveKwCard(id,dir){
+  const t=kwTasks.find(t=>t.id===id);
+  if(!t) return;
+  const idx=KW_COLS.findIndex(c=>c.id===t.col);
+  t.col=KW_COLS[Math.max(0,Math.min(KW_COLS.length-1,idx+dir))].id;
+  renderKwKanban();
+}
+
+function addKwTask(col){
+  const task=prompt('Task:');if(!task) return;
+  const label=prompt('Category (Website/Email/Social/CRM):') || 'Website';
+  const assignee=prompt('Assign to (TE/BS/JT/MR):') || 'TE';
+  const priority=prompt('Priority (High/Med/Low):') || 'Med';
+  kwTasks.push({id:'w'+Date.now(),label,task,assignee,priority,col});
+  renderKwKanban();
+}
+
+// MILESTONES
+const MILESTONES=[
+  {done:true,active:false,title:'Website launched',desc:'Core site live at legacy.hypergrowthhub.io',owner:'TE',ownerColor:'#CC2027'},
+  {done:false,active:true,title:'Website enhancement complete',desc:'Animations, unified CTAs, razzle dazzle phase done',owner:'MR',ownerColor:'#8A5A1A'},
+  {done:false,active:true,title:'All page scripts finalized',desc:'For Agents, Buy, Sell pages fully polished',owner:'TE/JT',ownerColor:'#CC2027'},
+  {done:false,active:false,title:'Real team photos added',desc:'Replace all stock photography with authentic KW Legacy images',owner:'JT',ownerColor:'#1A7A4A'},
+  {done:false,active:false,title:'Email automation live',desc:'HGH drip campaigns, agent recruitment sequences active',owner:'TE',ownerColor:'#CC2027'},
+  {done:false,active:false,title:'Social media pages launched',desc:'IG + FB + LinkedIn pages active with MAYO automation',owner:'BS',ownerColor:'#1A4A8A'},
+  {done:false,active:false,title:'First lead gen campaign live',desc:'Meta + Google ads running, leads flowing into HGH CRM',owner:'BS/TE',ownerColor:'#1A4A8A'},
+];
+
+function renderMilestones(){
+  const list=document.getElementById('milestoneList');
+  MILESTONES.forEach((m,i)=>{
+    list.innerHTML+=`
+      <div class="milestone">
+        <div class="milestone-check ${m.done?'done':m.active?'active':''}" onclick="toggleMilestone(${i})">
+          ${m.done?'✓':m.active?'▶':''}
+        </div>
+        <div class="milestone-info">
+          <div class="milestone-title" style="${m.done?'text-decoration:line-through;color:var(--gray2);':''}">${m.title}</div>
+          <div class="milestone-desc">${m.desc}</div>
+        </div>
+        <div class="milestone-owner" style="background:${m.ownerColor}22;color:${m.ownerColor};">${m.owner}</div>
+      </div>
+    `;
+  });
+}
+
+function toggleMilestone(i){
+  MILESTONES[i].done = !MILESTONES[i].done;
+  document.getElementById('milestoneList').innerHTML='';
+  renderMilestones();
+}
+
+// MEETINGS
+const MEETINGS=[
+  {
+    date:'Kickoff Meeting',
+    title:'KW Legacy × Curated Partners — Project Kickoff',
+    actions:[
+      {done:true,text:'Website structure approved by John',owner:'JT'},
+      {done:true,text:'HGH CRM connected to site',owner:'TE'},
+      {done:true,text:'AI chatbot activated',owner:'TE'},
+      {done:false,text:'John to provide real team photos',owner:'JT'},
+      {done:false,text:'Marcus to review and suggest visual enhancements',owner:'MR'},
+    ]
+  }
+];
+
+function renderMeetings(){
+  const list=document.getElementById('meetingList');
+  list.innerHTML='';
+  MEETINGS.forEach(m=>{
+    const actions=m.actions.map(a=>`
+      <div class="action-item">
+        <span style="color:${a.done?'var(--green)':'var(--gray2)'};">${a.done?'✓':'◯'}</span>
+        <span style="color:${a.done?'var(--gray)':'var(--dark)'};text-decoration:${a.done?'line-through':''};">${a.text}</span>
+        <span style="margin-left:auto;font-size:10px;font-family:var(--mono);color:var(--gray2);">${a.owner}</span>
+      </div>
+    `).join('');
+    list.innerHTML+=`
+      <div class="meeting-item">
+        <div class="meeting-date">${m.date}</div>
+        <div class="meeting-title">${m.title}</div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray2);font-family:var(--mono);margin-bottom:8px;">Action Items</div>
+        <div class="action-items">${actions}</div>
+      </div>
+    `;
+  });
+}
+
+function addMeeting(){
+  const title=prompt('Meeting title:');
+  if(!title) return;
+  const date=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  MEETINGS.unshift({date,title,actions:[]});
+  renderMeetings();
+}
+
+function saveNotes(){
+  alert('Notes saved! (Connect to Supabase for persistent storage)');
+}
+
+// Page switching
+const TABS=['dashboard','roadmap','tasks','website','milestones','meetings','notes'];
+function switchTab(tab, btn){
+  TABS.forEach(t=>{
+    const el=document.getElementById('page-'+t);
+    if(el) el.classList.toggle('active',t===tab);
+  });
+  document.querySelectorAll('.nav-tab,.sb-item').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  if(tab==='tasks') renderKwKanban();
+  if(tab==='milestones'&&!document.getElementById('milestoneList').children.length) renderMilestones();
+  if(tab==='meetings'&&!document.getElementById('meetingList').children.length) renderMeetings();
+}
+
+// Init
+renderKwKanban();
+renderMilestones();
+renderMeetings();
+</script>
+</body>
+</html>
